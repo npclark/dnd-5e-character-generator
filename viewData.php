@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="Author" content="Noah Clark">
-    <title>Add Data</title>
+    <title>View Data</title>
 
     <style>
         ul {
@@ -30,6 +30,24 @@
     <?php
         include "database/dbConnect.php";
 
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $sql;
+            if (!empty($_POST['phone'])) {
+                echo '<script>parent.window.location.reload(true);</script>';
+            } else if(isset($_POST['deleteItem1']) && is_numeric($_POST['deleteItem1'])){
+                $sql = "DELETE FROM `races` WHERE `raceID`='". $_POST['deleteItem1']. "'";
+            } else if(isset($_POST['deleteItem2']) && is_numeric($_POST['deleteItem2'])) {
+                $sql = "DELETE FROM `classes` WHERE `classID`='". $_POST['deleteItem2']. "'";
+            } else if(isset($_POST['deleteItem3']) && is_numeric($_POST['deleteItem3'])) {
+                $sql = "DELETE FROM `backgrounds` WHERE `backgroundID`='". $_POST['deleteItem3']. "'";
+            }
+
+            $delete = $conn->prepare($sql);
+            $delete->execute();
+            
+        }
+
         $stmtRace = $conn->prepare("SELECT * FROM races");
         $stmtRace->execute();
         $resultRace = $stmtRace->setFetchMode(PDO::FETCH_ASSOC);
@@ -39,25 +57,6 @@
         $stmtBack = $conn->prepare("SELECT * FROM backgrounds");
         $stmtBack->execute();
         $resultBack = $stmtBack->setFetchMode(PDO::FETCH_ASSOC);
-
-        // Creates table output
-        class TableRows extends RecursiveIteratorIterator {
-            function _construct($it) {
-                parent::_construct($it, self::LEAVES_ONLY);
-            }
-
-            function current() {
-                return "<td>" . parent::current(). "</td>";
-            }
-
-            function beginChildren(){
-                echo "<tr>";
-            }
-
-            function endChildren(){
-                echo '</tr>' . "\n";
-            }
-        }
     ?>
 </head>
 <body>
@@ -71,29 +70,30 @@
     </header>
 
     <form action="" method="post">
+        <input type="text" name="phone" id="phone" style="display:none !important" tableindex="-1" autocomplete="off" value="0" required>
     <?php 
 
         // Outputs Race table
         echo "<table>";
-        echo "<tr><th>ID</th><th>Race Name</th><th>Stat Bonus</th></tr>";
-        foreach(new TableRows(new RecursiveArrayIterator($stmtRace->fetchAll())) as $k=>$v){
-            echo $v;
+        echo "<tr><th>ID</th><th>Race Name</th><th>Stat Bonus</th><th>Delete?</th></tr>";
+        foreach($stmtRace->fetchAll() as $x){
+            echo "<tr><td>". $x['raceID']. "</td><td>". $x['raceName'] . "</td><td>". $x['statBonus']. "</td><td><button type='submit' name='deleteItem1' value='".$x['raceID']."' />Delete</button></td></tr>";
         }
         echo "</table>";
-        
+
         // Outputs Class table
         echo "<table>";
-        echo "<tr><th>ID</th><th>Class Name</th><th>Class Description</th><th>Hit Die</th><th>Primary Ability</th><th>Saving Throws</th></tr>";
-        foreach(new TableRows(new RecursiveArrayIterator($stmtClass->fetchAll())) as $k=>$v){
-            echo $v;
+        echo "<tr><th>ID</th><th>Class Name</th><th>Class Description</th><th>Hit Die</th><th>Primary Ability</th><th>Saving Throws</th><th>Delete?</th></tr>";
+        foreach($stmtClass->fetchAll() as $x){
+            echo "<tr><td>". $x['classID']. "</td><td>". $x['className'] . "</td><td>". $x['classDesc']. "</td><td>". $x['hitDie']. "</td><td>". $x['primaryAbility']. "</td><td>". $x['savingThrows']. "</td><td><button type='submit' name='deleteItem2' value='".$x['classID']."' />Delete</button></td></tr>";
         }
         echo "</table>";
 
         // Outputs Background table
         echo "<table>";
-        echo "<tr><th>ID</th><th>Background Name</th><th>Background Feature</th></tr>";
-        foreach(new TableRows(new RecursiveArrayIterator($stmtBack->fetchAll())) as $k=>$v){
-            echo $v;
+        echo "<tr><th>ID</th><th>Background</th><th>Feature</th><th>Delete?</th></tr>";
+        foreach($stmtBack->fetchAll() as $x){
+            echo "<tr><td>". $x['backgroundID']. "</td><td>". $x['backgroundName'] . "</td><td>". $x['backgroundFeature']. "</td><td><button type='submit' name='deleteItem3' value='".$x['backgroundID']."' />Delete</button></td></tr>";
         }
         echo "</table>";
     ?>

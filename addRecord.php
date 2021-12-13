@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="Author" content="Noah Clark">
-    <title>Admin Login</title>
+    <title>Add New Data</title>
 
     <style>
         ul {
