@@ -7,21 +7,50 @@
     <title>5e Character Generator</title>
 
     <style>
+        body {
+            background-color: #866743;
+        }
         ul {
             list-style-type: none;
             margin: 0;
             padding: 0;
             overflow: hidden;
-            background-color: #dddddd;
+            background-color: #2c988d;
         }
 
         li {
             float: left;
+            border-right:1px solid #bbb;
         }
 
         li a {
             display: block;
-            padding: 8px;
+            color: black;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover:not(.active) {
+            background-color: #dcd2d3;
+        }
+
+        .active {
+            background-color: #fcf7f5;
+        }
+
+        .button {
+            background-color: #2c988d;
+            border: none;
+            color: black;
+            padding: 15px 32px;
+            text-align: center;
+            display: inline-block;
+            font-size: 16px;
+        }
+
+        p {
+            font-size: 18px;
         }
     </style>
 
@@ -111,7 +140,7 @@
     <header>
         <h1>Dungeons and Dragons Fifth Edition Character Generator</h1>
         <ul>
-            <li><a href="5eCharGen.php">Home</a></li>
+            <li class="active"><a href="5eCharGen.php">Home</a></li>
             <li><a href="contactPage.php">Contact</a></li>
             <li><a href="adminLogin.php">Admin Login</a></li>
         </ul>
@@ -183,7 +212,7 @@
     <section>
         <h3>Click this button to generate a character!</h3>
         <form id="charGen" name="charGen" method="post" action="5eCharGen.php">
-            <input type="submit" id="button" name="button" value="Generate Character">
+            <input type="submit" class="button" id="button" name="button" value="Generate Character">
         </form>
         <br>
         <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') {

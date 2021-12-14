@@ -6,21 +6,50 @@
     <title>Admin Login</title>
 
     <style>
+        body {
+            background-color: #866743;
+        }
         ul {
             list-style-type: none;
             margin: 0;
             padding: 0;
             overflow: hidden;
-            background-color: #dddddd;
+            background-color: #2c988d;
         }
 
         li {
             float: left;
+            border-right:1px solid #bbb;
         }
 
         li a {
             display: block;
-            padding: 8px;
+            color: black;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover:not(.active) {
+            background-color: #dcd2d3;
+        }
+
+        .active {
+            background-color: #fcf7f5;
+        }
+
+        .button {
+            background-color: #2c988d;
+            border: none;
+            color: black;
+            padding: 15px 32px;
+            text-align: center;
+            display: inline-block;
+            font-size: 16px;
+        }
+
+        p {
+            font-size: 18px;
         }
     </style>
 </head>
@@ -54,7 +83,7 @@
                     <input type="password" name="password" id="password" required>
                 </p>
                 <p>
-                    <input type="submit" name="button" id="button" value="Submit">
+                    <input type="submit" class="button" name="button" id="button" value="Submit">
                 </p>
                 <input type="text" name="phone" id="phone" style="display:none !important" tableindex="-1" autocomplete="off" value="0" required>
             <?php } else if (!empty($_POST['phone'])) { ?>

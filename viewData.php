@@ -6,22 +6,52 @@
     <title>View Data</title>
 
     <style>
+        body {
+            background-color: #866743;
+        }
         ul {
             list-style-type: none;
             margin: 0;
             padding: 0;
             overflow: hidden;
-            background-color: #dddddd;
+            background-color: #2c988d;
         }
 
         li {
             float: left;
+            border-right:1px solid #bbb;
         }
 
         li a {
             display: block;
-            padding: 8px;
+            color: black;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
         }
+
+        li a:hover:not(.active) {
+            background-color: #dcd2d3;
+        }
+
+        .active {
+            background-color: #fcf7f5;
+        }
+
+        .button {
+            background-color: #2c988d;
+            border: none;
+            color: black;
+            padding: 15px 32px;
+            text-align: center;
+            display: inline-block;
+            font-size: 16px;
+        }
+
+        p {
+            font-size: 18px;
+        }
+        
         table {
             border: solid 1px black;
         }
@@ -77,7 +107,7 @@
         echo "<table>";
         echo "<tr><th>ID</th><th>Race Name</th><th>Stat Bonus</th><th>Delete?</th></tr>";
         foreach($stmtRace->fetchAll() as $x){
-            echo "<tr><td>". $x['raceID']. "</td><td>". $x['raceName'] . "</td><td>". $x['statBonus']. "</td><td><button type='submit' name='deleteItem1' value='".$x['raceID']."' />Delete</button></td></tr>";
+            echo "<tr><td>". $x['raceID']. "</td><td>". $x['raceName'] . "</td><td>". $x['statBonus']. "</td><td><button type='submit' class='button' name='deleteItem1' value='".$x['raceID']."' />Delete</button></td></tr>";
         }
         echo "</table>";
 
@@ -85,7 +115,7 @@
         echo "<table>";
         echo "<tr><th>ID</th><th>Class Name</th><th>Class Description</th><th>Hit Die</th><th>Primary Ability</th><th>Saving Throws</th><th>Delete?</th></tr>";
         foreach($stmtClass->fetchAll() as $x){
-            echo "<tr><td>". $x['classID']. "</td><td>". $x['className'] . "</td><td>". $x['classDesc']. "</td><td>". $x['hitDie']. "</td><td>". $x['primaryAbility']. "</td><td>". $x['savingThrows']. "</td><td><button type='submit' name='deleteItem2' value='".$x['classID']."' />Delete</button></td></tr>";
+            echo "<tr><td>". $x['classID']. "</td><td>". $x['className'] . "</td><td>". $x['classDesc']. "</td><td>". $x['hitDie']. "</td><td>". $x['primaryAbility']. "</td><td>". $x['savingThrows']. "</td><td><button class='button' type='submit' name='deleteItem2' value='".$x['classID']."' />Delete</button></td></tr>";
         }
         echo "</table>";
 
